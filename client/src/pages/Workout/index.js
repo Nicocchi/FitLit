@@ -1,10 +1,14 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import shortid from "shortid";
-import Button from "react-bootstrap/Button";
+import Button from '@material-ui/core/Button';
 import RoutineModal from "../../components/RoutineModal";
-import Card from "react-bootstrap/Card"
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 import CardGroup from 'react-bootstrap/CardGroup'
+import Typography from '@material-ui/core/Typography';
 
 class Index extends React.Component {
 	static propTypes = {};
@@ -352,20 +356,20 @@ class Index extends React.Component {
                     {
                         this.state.routines.map(routine => {
                             return (
-                                    <Card bg="dark" text="white" onClick={() => this.editRoutine(routine.id)} key={shortid.generate()} style={{ textAlign: "left", width: 'auto', margin: "10px" }}>
-                                        <Card.Header>{routine.name}</Card.Header>
-                                        <Card.Body>
+                                    <Card onClick={() => this.editRoutine(routine.id)} key={shortid.generate()} style={{ textAlign: "left", width: 'auto', margin: "10px" }}>
+                                        <CardContent>
+                                            <Typography gutterBottom variant="h5" component="h2">
+                                                {routine.name}
+                                            </Typography>
                                             {
                                                 routine.exercises.map(exercise => (
-                                                    <>
-                                                    <Card.Text style={{padding: "0", margin: "0"}}>
+                                                    <Typography key={shortid.generate()} variant="body2" color="textSecondary" component="p" style={{padding: "0", margin: "0"}}>
                                                         {exercise.sets.length} x {exercise.name}
-                                                    </Card.Text>
-                                                    </>
+                                                    </Typography>
                                                 ))
                                             }
-                                            <Card.Subtitle className="mb-2 text-muted" style={{fontStyle: "italic", marginTop: "10px"}}>{routine.note}</Card.Subtitle>
-                                        </Card.Body>
+                                            <Typography className="mb-2 text-muted" style={{fontStyle: "italic", marginTop: "10px"}}>{routine.note}</Typography>
+                                        </CardContent>
                                     </Card>
                             )
                         })

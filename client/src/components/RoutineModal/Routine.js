@@ -1,11 +1,20 @@
 import React, { Component } from 'react'
 import shortid from "shortid";
 import Modal from "react-bootstrap/Modal";
-import Button from "react-bootstrap/Button";
+import Button from '@material-ui/core/Button';
 import InputGroup from "react-bootstrap/InputGroup";
 import FormControl from "react-bootstrap/FormControl";
-import Table from "react-bootstrap/Table";
+// import Table from "react-bootstrap/Table";
 import Exercise from "./Exercise";
+import TextField from '@material-ui/core/TextField';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+
 
 export default class Routine extends Component {
     constructor(props) {
@@ -62,32 +71,35 @@ export default class Routine extends Component {
 				<br />
 				{
 					this.state.modalEditName ?
-					<InputGroup className="mb-3" ref={this.setWrapperRef}>
-						<InputGroup.Prepend>
-							<InputGroup.Text id="basic-addon1">@</InputGroup.Text>
-						</InputGroup.Prepend>
-						<FormControl autoFocus onKeyPress={e => this.handleKeyPress(e, this.props.exercise.id)} placeholder={this.props.exercise.name} aria-label="Exercise-Name" aria-describedby="basic-addon1" />
-					</InputGroup>
+					<TextField
+					autoFocus
+					margin="dense"
+					id="name"
+					label="Exercise name"
+					type="text"
+					fullWidth
+					onKeyPress={e => this.handleKeyPress(e, this.props.exercise.id)}
+				  />
 					: <h4 onDoubleClick={this.editName} >{this.props.exercise.name}</h4>
 				}
 				<Table responsive>
-					<thead>
-						<tr>
-							<th>Set</th>
-							<th>Previous</th>
-							<th>LBS</th>
-							<th>Reps</th>
-						</tr>
-					</thead>
-					<tbody>
+					<TableHead>
+						<TableRow>
+							<TableCell>Set</TableCell>
+							<TableCell>Previous</TableCell>
+							<TableCell>LBS</TableCell>
+							<TableCell>Reps</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
 						{this.props.exercise.sets.map(set => {
 							return (
-								<Exercise id={this.props.exercise.id} set={set} handleSetKeyPress={this.props.handleSetKeyPress} />
+								<Exercise key={shortid.generate()} id={this.props.exercise.id} set={set} handleSetKeyPress={this.props.handleSetKeyPress} />
 							);
 						})}
-					</tbody>
+					</TableBody>
 				</Table>
-				<Button onClick={() => this.props.addSet(this.props.exercise.id)}>Add Set</Button>
+				<Button variant="success" onClick={() => this.props.addSet(this.props.exercise.id)} style={{marginTop: "10px"}}>Add Set</Button>
 			</div>
         )
     }
